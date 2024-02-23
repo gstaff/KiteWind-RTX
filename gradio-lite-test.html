@@ -1,0 +1,70 @@
+<!--Hot Reloadable stlite app similar to https://edit.share.stlite.net; intended to be minimal example.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="module" crossorigin src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.css"/>
+</head>
+<body>
+	<h1>Edit Requirements / Code and Click Update App to View Changes</h1>
+    <p>Adding requirement `snowballstemmer` and the code below should work:</p>
+    <textarea rows="5" cols="60" disabled="true">import snowballstemmer
+stemmer = snowballstemmer.stemmer('english')
+st.write(stemmer.stemWords('go goes going gone'.split()))</textarea>
+    <br>
+    <textarea title="Requirements" id="requirementsArea" rows="5" cols="20">matplotlib</textarea>
+    <textarea title="Code" id="codeArea" rows="5" cols="80">
+import gradio as gr
+
+def greet(name):
+	return "Hello, " + name + "!"
+
+gr.Interface(greet, "textbox", "textbox").launch()
+</textarea>
+    <button onclick="update()">Update App</button>
+	<script>
+      const requirementsArea = document.getElementById("requirementsArea");
+      if (!window.oldRequirements) {
+        window.oldRequirements = new Set(requirementsArea.value.trim().split('\n').map(x => x.trim()));
+      }
+      async function update() {
+        const appController = window.appController;
+        const newRequirements = requirementsArea.value.trim().split('\n').map(x => x.trim()).sort();
+        if (requirementsArea.value && !newRequirements.every(x => window.oldRequirements.has(x))) {
+          console.log(`Installing new requirements: ${newRequirements.filter(x => !window.oldRequirements.has(x))}`);
+          await appController.install(newRequirements);
+          window.oldRequirements = new Set(newRequirements);
+        }
+        // Add a no-op change to trigger app updates even if code was unchanged so any new requirements get picked up.
+        const code = document.getElementById("codeArea").value + `\n# Update tag ${Math.random()}`;
+        appController.run_code(code);
+      };
+    </script>
+    <div id="gradio-app"></div>
+	<script type="module">
+      const code = `import gradio as gr
+
+def greet(name):
+	return "Hello, " + name + "!"
+
+gr.Interface(greet, "textbox", "textbox").launch()`;
+      // Mount options defined here: https://github.com/gradio-app/gradio/blob/1d986217f6f4fc1829e528d2afe365635788204f/js/lite/index.html#L27
+      const appController = createGradioApp({
+				target: document.getElementById("gradio-app"),
+				code: code,
+				info: true,
+				container: true,
+				isEmbed: false,
+				initialHeight: "300px",
+				eager: false,
+				themeMode: null,
+				autoScroll: false,
+				controlPageTitle: false,
+				appMode: true
+			});
+      // Returned controller functions defined here:
+      // https://github.com/gradio-app/gradio/blob/1d986217f6f4fc1829e528d2afe365635788204f/js/app/src/lite/index.ts#L165
+      window.appController = appController;
+    </script>
+</body>
+</html>

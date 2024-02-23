@@ -1,0 +1,33 @@
+<div id="KiteWindApp">
+    <!-- This app was created with KiteWind Chat-assisted Web App Creator (https://huggingface.co/spaces/gstaff/KiteWind) -->
+    <iframe id="demo-iframe" width="100%" height="512px" src="about:blank" frameborder="0"></iframe>
+    <script>
+        const template = \`<div id="gradio-app"></div>
+            <script type="module" crossorigin src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.js"><\\\/script>
+		    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.css" />
+            <script type="module">
+                  const code = \\\`STARTING_CODE\\\`;
+                  const requirements = \\\`STARTING_REQUIREMENTS\\\`.split('\\\\n').filter(x => x && !x.startsWith('#')).map(x => x.trim());
+                  const appController = createGradioApp({
+                        target: document.getElementById("gradio-app"),
+                        code: code,
+                        info: true,
+                        container: true,
+                        isEmbed: false,
+                        initialHeight: "400px",
+                        eager: false,
+                        themeMode: null,
+                        autoScroll: false,
+                        controlPageTitle: false,
+                        appMode: true
+                    });
+                  window.appController = appController;
+                  await appController.install(requirements);
+		          await appController.run_code(code);
+            <\\\/script>\`
+        const frame = document.getElementById('demo-iframe');
+        frame.contentWindow.document.open();
+        frame.contentWindow.document.write(template);
+        frame.contentWindow.document.close();
+    </script>
+</div>

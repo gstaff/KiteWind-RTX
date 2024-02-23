@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="module" crossorigin src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.css" />
+	</head>
+	<body>
+	    <!-- This app was created with KiteWind Chat-assisted Web App Creator (https://huggingface.co/spaces/gstaff/KiteWind) -->
+		<div id="gradio-app"></div>
+        <script type="module">
+          const code = \`STARTING_CODE\`;
+          const requirements = \`STARTING_REQUIREMENTS\`.split('\\n').filter(x => x && !x.startsWith('#')).map(x => x.trim());
+           // Mount options defined here: https://github.com/gradio-app/gradio/blob/1d986217f6f4fc1829e528d2afe365635788204f/js/lite/index.html#L27
+          const appController = createGradioApp({
+                    target: document.getElementById("gradio-app"),
+                    code: code,
+                    info: true,
+                    container: true,
+                    isEmbed: false,
+                    initialHeight: "400px",
+                    eager: false,
+                    themeMode: null,
+                    autoScroll: false,
+                    controlPageTitle: false,
+                    appMode: true
+                });
+          // Returned controller functions defined here:
+          // https://github.com/gradio-app/gradio/blob/1d986217f6f4fc1829e528d2afe365635788204f/js/app/src/lite/index.ts#L165
+          window.appController = appController;
+		  await appController.install(requirements);
+		  await appController.run_code(code);
+        </script>
+	</body>
+</html>
