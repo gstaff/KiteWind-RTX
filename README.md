@@ -20,7 +20,7 @@ It can likely run on 8 GB cards as well.
 Building the TensorRT-LLM engine may require at least 32 GB of RAM.
 
 #### Disk Space
-This app takes about 12 GB when dependencies are installed and the LLM engine files are included. To be safe plan to have at least 24 GB of disk space available.
+This app takes about 12 GB when dependencies are installed and the LLM engine files are included. To be safe, plan to have at least 24 GB of disk space available.
 
 #### Voice Input
 You will need a microphone or other audio input device to interact via the voice button.
@@ -82,6 +82,7 @@ python -m pip uninstall -y nvidia-cudnn-cu11
 python -m pip install tensorrt_llm --extra-index-url https://pypi.nvidia.com --extra-index-url https://download.pytorch.org/whl/cu121
 ```
 Then try to build again. A clean build may take at least 4 minutes using CPU.
+
 13. If you see the 3 output files in `mistral_engines` then test to confirm the LLM engine is working with `python run.py --max_output_len=50 --tokenizer_dir "C:\Users\<some>\<path>\TensorRTInstall\Mistral-7B-Instruct-v0.2" --engine_dir=".\mistral_engines"`
     1. This should output some text about "Born in north-east France, Soyer trained as a..."
 14. Once the engine files are generated place them in `.\engines\Mistral-7B-Instruct-v0.2` in this project
