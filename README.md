@@ -20,7 +20,7 @@ It can likely run on 8 GB cards as well.
 Building the TensorRT-LLM engine may require at least 32 GB of RAM.
 
 #### Disk Space
-This app takes ~14 GB when dependencies are installed and the LLM engine files are included. The build dependencies for the LLM engine files take ~32 GB on disk.
+This app takes ~14 GB when dependencies are installed and the LLM engine files are included. The build dependencies for the LLM engine files take ~50 GB on disk but can be removed once the ~4 GB engine file is built.
 
 #### Voice Input
 You will need a microphone or other audio input device to interact via the voice button.
@@ -58,7 +58,31 @@ Summarizing:
 #### Building the TensorRT-LLM Engine
 You will need to compile a LLM engine specific to your hardware.
 
-There are several steps to this:
+If you already have the 3 engine files for your system place them in `.\engines\Mistral-7B-Instruct-v0.2`
+
+Otherwise run `.\build_mistral_engine.bat`
+
+The build dependencies will be installed under `.\TensorRT-LLM` and the engine files will be copied to `.\engines\Mistral-7B-Instruct-v0.2`
+
+Note that the build process will take ~15-20 minutes and consume ~50 GB of disk space. Once you have a working engine for your system you can delete the engine build dependencies by deleting `.\TensorRT-LLM`
+
+If the build script fails for you see the "Troubleshooting TensorRT-LLM Engine Build" section below.
+
+### Installation
+Install dependencies by running `.\install_dependencies.bat`
+
+### Running the App
+Run `.\run.bat` once dependencies are installed; the app will open in a browser tab.
+
+## Current Limitations
+- Only gradio-lite and stlite (streamlit) apps using libraries avialable for [pyodide](https://pyodide.org/en/stable/) are supported.
+- The chat hasn't been fine-tuned on gradio or streamlit library data; it may make mistakes.
+
+## Troubleshooting the TensorRT-LLM Engine Build
+
+There are many steps to the engine build process
+
+Read the commented commands in `.\build_mistral_engine.bat` and see the manual steps below for additional guidance:
 1. Clone the Mistral model code to use as `model_dir`: `git clone https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2/tree/main`
 2. Download the 4-bit AWQ quantized models to use as `quant_ckpt_path` from NVIDIA here: https://catalog.ngc.nvidia.com/orgs/nvidia/models/mistral-7b-int4-chat/files?version=1.1
 3. `git clone https://github.com/NVIDIA/TensorRT-LLM.git`
@@ -91,13 +115,3 @@ Then try to build again. A clean build may take at least 4 minutes using CPU.
        - `llama_float16_tp1_rank0.engine` - A ~4 GB file containing the compiled engine with the expected settings
          - Keep the `llama` naming; mistral shares the common builder config
        - `model.cache` - A small cache file
-
-### Installation
-Install dependencies by running `.\install_dependencies.bat`
-
-### Running the App
-Run `.\run.bat` once dependencies are installed; the app will open in a browser tab.
-
-## Current Limitations
-- Only gradio-lite and stlite (streamlit) apps using libraries avialable for [pyodide](https://pyodide.org/en/stable/) are supported.
-- The chat hasn't been fine-tuned on gradio or streamlit library data; it may make mistakes.
