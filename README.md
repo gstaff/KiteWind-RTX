@@ -20,7 +20,7 @@ It can likely run on 8 GB cards as well.
 Building the TensorRT-LLM engine may require at least 32 GB of RAM.
 
 #### Disk Space
-This app takes about 12 GB when dependencies are installed and the LLM engine files are included. To be safe, plan to have at least 24 GB of disk space available.
+This app takes ~14 GB when dependencies are installed and the LLM engine files are included. The build dependencies for the LLM engine files take ~32 GB on disk.
 
 #### Voice Input
 You will need a microphone or other audio input device to interact via the voice button.
