@@ -138,7 +138,7 @@ def redo(code: str, history: [str], current_index: int) -> (str, int):
 
 
 with gr.Blocks(title="KiteWind") as demo:
-    gr.Markdown('<h1 align="center"><a href="https://huggingface.co/spaces/gstaff/KiteWind">KiteWind</a> 🪁🍃</h1>')
+    gr.Markdown('<h1 align="center"><a href="http://127.0.0.1:7860">KiteWind-RTX</a> 🪁🍃</h1>')
     gr.Markdown(
         '<h4 align="center">Chat-assisted web app creator by <a href="https://huggingface.co/gstaff">@gstaff</a></h4>')
     selectedTab = gr.State(value='gradio-lite')

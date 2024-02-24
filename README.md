@@ -98,5 +98,5 @@ Install dependencies by running `.\install_dependencies.bat`
 Run `.\run.bat` once dependencies are installed; the app will open in a browser tab.
 
 ## Current Limitations
-- Only gradio-lite and stlite (streamlit) apps using the python standard libraries are supported
-- The chat hasn't been fine-tuned on gradio or streamlit library data; it may make mistakes
+- Only gradio-lite and stlite (streamlit) apps using libraries avialable for [pyodide](https://pyodide.org/en/stable/) are supported.
+- The chat hasn't been fine-tuned on gradio or streamlit library data; it may make mistakes.
